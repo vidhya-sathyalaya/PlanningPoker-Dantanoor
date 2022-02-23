@@ -1,10 +1,32 @@
 from distutils.sysconfig import get_makefile_filename
+import json
 from tkinter import *
+from webbrowser import get
 from Registration import *
+from fastapi import status
+
 import os
+
+from gui_client_util import GUI_Helper
 
 def login():
     pass
+util = GUI_Helper()
+
+def get_current_issue():
+    response = util.send_request(method='get',
+                                     route='/issue/current')
+    if response.status_code == status.HTTP_200_OK:
+            response_dict = json.loads(response.text)
+            curr_issue_title = response_dict['result_message']['title']
+            curr_issue_desc = response_dict['result_message']['description']
+
+            if len(curr_issue_desc) > 0:
+                return curr_issue_title+ " - " + curr_issue_desc
+            else:
+                return curr_issue_title
+    else:
+            return "Failure fetching current issue"
 
 def main_account_screen():
     global main_screen
@@ -18,6 +40,9 @@ def main_account_screen():
     Button(text="Login", height="2", width="30", command=login).pack()
     Label(text="").pack()
     Button(text="Register", height="2", width="30", command=register).pack()
+    Label(text="").pack()
+    Label(text="Current Issue : ").pack()
+    Label(text=get_current_issue()).pack()
  
     main_screen.mainloop()
 
