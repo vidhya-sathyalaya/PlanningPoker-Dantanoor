@@ -1,6 +1,8 @@
 from distutils.sysconfig import get_makefile_filename
 import json
 from tkinter import *
+import tkinter
+from tkinter import messagebox
 from webbrowser import get
 from Registration import *
 from fastapi import status
@@ -28,6 +30,9 @@ def get_current_issue():
     else:
             return "Failure fetching current issue"
 
+def showCurrIssue():
+    tkinter.messagebox.showinfo(title="Current Issue", message=get_current_issue())
+
 def main_account_screen():
     global main_screen
     main_screen = Tk()
@@ -41,8 +46,7 @@ def main_account_screen():
     Label(text="").pack()
     Button(text="Register", height="2", width="30", command=register).pack()
     Label(text="").pack()
-    Label(text="Current Issue : ").pack()
-    Label(text=get_current_issue()).pack()
+    Button(text="Show Current Issue", height="2", width="30", command=showCurrIssue).pack()
  
     main_screen.mainloop()
 
