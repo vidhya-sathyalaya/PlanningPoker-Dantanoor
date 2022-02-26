@@ -26,7 +26,7 @@ def addIssue():
 
         issue_data = {
             'title': issue_name.get(),
-            'description': issue_name.get()
+            'description': issue_desc.get()
         }
         
         
