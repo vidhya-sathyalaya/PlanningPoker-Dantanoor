@@ -1,3 +1,4 @@
+import atexit
 from distutils.sysconfig import get_makefile_filename
 import json
 from tkinter import *
@@ -36,10 +37,20 @@ def get_current_issue():
 def showCurrIssue():
     tkinter.messagebox.showinfo(title="Current Issue", message=get_current_issue())
 
+def closewindow():
+    
+    result = tkinter.messagebox.askquestion("Exit", "Are You Sure You Want to Exit?")
+    if result == "yes":
+        main_screen.destroy()
+    
+    else:
+        return None
+
+
 def main_account_screen():
     global main_screen
     main_screen = Tk()
-    main_screen.geometry("500x400")
+    main_screen.geometry("500x450")
     main_screen.title("Planning Poker")
     Label(text="Delta Poker", bg="white", width="300", height="2", font=("Calibri", 13)).pack()
     Label(text="").pack()
@@ -52,6 +63,9 @@ def main_account_screen():
     Button(text="Add Issue", height="2", width="30", command=lambda: open_another_file('add_issue.py')).pack()
     Label(text="").pack()
     Button(text="Show Current Issue", height="2", width="30", command=showCurrIssue).pack()
+    Label(text="").pack()
+    Button(main_screen, text="Exit",height="2", width="30",  command=closewindow).pack()
+    
  
     main_screen.mainloop()
 
