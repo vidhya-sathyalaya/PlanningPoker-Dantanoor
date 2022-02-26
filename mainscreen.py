@@ -11,6 +11,9 @@ import os
 
 from gui_client_util import GUI_Helper
 
+def open_another_file(filename):
+    os.system('python ' + filename)
+
 def login():
     pass
 util = GUI_Helper()
@@ -45,6 +48,8 @@ def main_account_screen():
     Button(text="Login", height="2", width="30", command=login).pack()
     Label(text="").pack()
     Button(text="Register", height="2", width="30", command=register).pack()
+    Label(text="").pack()
+    Button(text="Add Issue", height="2", width="30", command=lambda: open_another_file('add_issue.py')).pack()
     Label(text="").pack()
     Button(text="Show Current Issue", height="2", width="30", command=showCurrIssue).pack()
  
