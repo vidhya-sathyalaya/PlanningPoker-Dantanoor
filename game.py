@@ -27,11 +27,15 @@ class UserAuth(User):
 class UserVote(User):
     vote_value: str
 
+class UserJustifn(User):
+    name: str
+    justification: str
 
 class Issue(BaseModel):
     title: str
     description: Optional[str] = None
     votes: Optional[List[Dict]] = []
+    justifications: Optional[List[Dict]] = []
 
 
 class VotingSystem(Enum):
@@ -202,3 +206,7 @@ class Game:
             self.issues_list[self.current_issue_index].votes.append(user_vote)
             return True
         return False
+
+    def justify_issue(self, user_just: UserJustifn):
+        self.issues_list[self.current_issue_index].justifications.append(user_just)
+        return True
