@@ -130,6 +130,10 @@ def get_issue_votes():
         verb = "has"
     return {"result_message": f"{left_to_vote_count} still {verb} to vote"}
 
+@app.get("/issue/justification")
+def get_user_justification():
+    return {"result_message": {"justification": game.get_justification()}}
+
 @app.put("/issue/justify")
 def add_user_justification(user_justification: UserJustifn = Body(...)):
     ret_status = game.justify_issue(user_just=user_justification)

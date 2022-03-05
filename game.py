@@ -208,5 +208,20 @@ class Game:
         return False
 
     def justify_issue(self, user_just: UserJustifn):
+        jfn_list = self.issues_list[self.current_issue_index].justifications.copy()
+        for i in range (0,len(jfn_list),1):
+            if jfn_list[i].name == user_just.name:
+                del jfn_list[i]
+
+        self.issues_list[self.current_issue_index].justifications.clear()
+        self.issues_list[self.current_issue_index].justifications = jfn_list.copy()
+
         self.issues_list[self.current_issue_index].justifications.append(user_just)
+        
         return True
+
+    def get_justification(self):
+        curr_issue_justfn = self.get_current_issue.justifications
+        ret_justifications = [x.justification for x in curr_issue_justfn]
+        return ret_justifications
+        
