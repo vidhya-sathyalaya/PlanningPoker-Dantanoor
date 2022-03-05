@@ -17,6 +17,8 @@ def test_post_justification():
 
     assert response.status_code == 200         
 
+
+
 def test_get_justification():
     response = util.send_request(method='get',
                                      route='/issue/justification')
@@ -24,7 +26,7 @@ def test_get_justification():
 
     if response.status_code == status.HTTP_200_OK:
             response_dict = json.loads(response.text)
-            assert(response_dict['result_message']['justification'] ==  "Test justification")                     
+            assert(response_dict['result_message']['justification'] ==  ["Test justification"])                     
 
 test_post_justification()
 test_get_justification()
