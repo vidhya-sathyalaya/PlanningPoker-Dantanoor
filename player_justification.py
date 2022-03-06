@@ -1,5 +1,9 @@
 from tkinter import *
+from gui_client_util import GUI_Helper
+from fastapi import status
+import json
 
+util = GUI_Helper()
 main = Tk()
 main.title("Player Judgement")
 
@@ -17,12 +21,25 @@ heading_label.grid(row=0, column = 0, sticky = W+E, padx=25, pady=25, columnspan
 
 def submit():
 
-    player_list.append(player_name.get())
-    player_name.delete(0, END)
-    
+    justfn_data = {
+            'name': player_name.get(),
+            'justification': player_description.get()
+        }
 
-    description_list.append(player_description.get())
-    player_description.delete(0, END)
+    response = util.send_request(method='put',
+                                     route='/issue/justify',
+                                     data=justfn_data)
+
+    result_txt = ""
+        #print(f"{json.dumps(json.loads(response.text), indent=4)}")
+
+    if response.status_code == status.HTTP_200_OK:
+        response_dict = json.loads(response.text)
+        result_txt= "Justification added successfully"
+        
+    else:
+        result_txt= "Received " + str(response.status_code) + " from server"
+    Label(main, text=result_txt).grid(row = 5, column = 0, padx = 10)
     
 
 

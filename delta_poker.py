@@ -9,6 +9,7 @@ from game import User
 from game import UserVote
 from game import Game
 from game import VotingSystem
+from game import UserJustifn
 from typing import Dict
 from typing import Optional
 
@@ -129,22 +130,40 @@ def get_issue_votes():
         verb = "has"
     return {"result_message": f"{left_to_vote_count} still {verb} to vote"}
 
+@app.get("/issue/justification")
+def get_user_justification():
+    return {"result_message": {"justification": game.get_justification()}}
+
+@app.put("/issue/justify")
+def add_user_justification(user_justification: UserJustifn = Body(...)):
+    ret_status = game.justify_issue(user_just=user_justification)
+    if ret_status:
+        return {"result_message": f"{user_justification.name}'s "
+                                  f"'{user_justification.justification}' "
+                                  f"was registered" }
+    else:
+        return {"result_message": f"Unable to register justification"}
 
 @app.put("/issue/vote")
 def add_user_vote(user_vote: UserVote = Body(...)):
+
+    #Check given username against list of available usernames
     crt_users = [user.name for user in game.users.values()]
     if user_vote.name not in crt_users:
         raise HTTPException(
             status_code=status.HTTP_412_PRECONDITION_FAILED,
             detail=f"Please add the user '{user_vote.name}' to the game")
 
+    #Check voting value in voting system
     if user_vote.vote_value not in game.voting_system:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Please select a vote from the current voting system: "
                    f"{game.voting_system}")
 
+    #Send uservote to game util
     vote_status = game.vote_issue(user_vote=user_vote)
+    #get current issue
     crt_issue = game.get_current_issue
     if vote_status:
         return {"result_message": f"{user_vote.name}'s "
