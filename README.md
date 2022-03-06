@@ -6,7 +6,7 @@ To run the GUI client
 ```commandline
 python .\mainscreen.py
 ```
-# Description of Options available in GUI
+### Description of Options available in GUI
 
 1. Add Issue - Adds issue into the server
 2. Show Current Issue - Displays current issue in voting fetched from server
@@ -16,7 +16,7 @@ python .\mainscreen.py
 6. Exit - Quit the GUI client
 
 
-# Prerequisites
+### Prerequisites
 1. Run the delta-poker server using the command as described below for the starter-code
 2. Add issues to the server using the command as described below for the starter-code. (Issues can also be added from the GUI client)
 3. Use delta-cli application to create players and vote for issues to use some of the GUI functionalities. 
