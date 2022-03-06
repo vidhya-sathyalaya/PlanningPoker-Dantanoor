@@ -36,6 +36,16 @@ def display():
     for i in player_list:
         Radiobutton(d, text = i, variable=judgement, value = player_list.index(i)).pack(anchor=W)
     show_description=Button(d, text="Show Description", command = lambda: open(judgement.get())).pack(pady=15)
+    
+      def end():
+        consesnsus = messagebox.askquestion("Consensus","Have you reached a consensus ?" )
+        if consesnsus == "yes":
+            d.quit()
+            main.quit()
+        else:
+            pass
+    
+    end_round = Button(d, text = "End Round", command = end).pack()
 
     
     
