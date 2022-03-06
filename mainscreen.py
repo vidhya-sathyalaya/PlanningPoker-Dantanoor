@@ -38,10 +38,12 @@ def showCurrIssue():
     tkinter.messagebox.showinfo(title="Current Issue", message=get_current_issue())
 
 def parse_report(report):
+        ret_str = ""
         for vote_value, vote_details in report.items():
-            print(f"{vote_details['vote_count']} voted for {vote_value} "
-                  f"story points.\n"
-                  f"{json.dumps(vote_details['voters'], indent=4)}\n")
+            json_details = json.dumps(vote_details['voters'])
+            vote_count = vote_details['vote_count']
+            ret_str += str(vote_count) + "voted for " + str(vote_value) + "story points.\n" + json_details+ "\n"
+        return ret_str
 
 def get_report():
     current_status = 'pending'
@@ -53,14 +55,14 @@ def get_report():
             if response.status_code == status.HTTP_200_OK:
                 response_message = json.loads(response.text)['result_message']
                 current_status = response_message['status']
+                ret_str = "Pending votes"
                 if current_status == 'done':
-                    parse_report(response_message['report'])
-                print(response_message)
+                   ret_str = parse_report(response_message['report'])
+                return ret_str
             else:
                 current_status = 'error'
                 return "Failure fetching the Report"
-            retry_count += 1
-            time.sleep(util.show_timeout)
+            
 
 def show_report():
     tkinter.messagebox.showinfo(title="The Report", message=get_report())
