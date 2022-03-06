@@ -90,4 +90,5 @@ display_button.grid(row = 5, column = 0, padx=50, pady = 25, columnspan=3)
 
 main.mainloop()
 print(player_list)
-print(description_list)
+print(description_list) 
+
