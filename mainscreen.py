@@ -1,6 +1,6 @@
-import atexit
 from distutils.sysconfig import get_makefile_filename
 import json
+import time
 from tkinter import *
 import tkinter
 from tkinter import messagebox
@@ -37,6 +37,36 @@ def get_current_issue():
 def showCurrIssue():
     tkinter.messagebox.showinfo(title="Current Issue", message=get_current_issue())
 
+def parse_report(report):
+        ret_str = ""
+        for vote_value, vote_details in report.items():
+            json_details = json.dumps(vote_details['voters'])
+            vote_count = vote_details['vote_count']
+            ret_str += str(vote_count) + "voted for " + str(vote_value) + "story points.\n" + json_details+ "\n"
+        return ret_str
+
+def get_report():
+    current_status = 'pending'
+    retry_count = 0
+    while current_status == 'pending' and retry_count < util.max_retries:
+            response = util.send_request(method='get',
+                                         route='/issue/show_results')
+            
+            if response.status_code == status.HTTP_200_OK:
+                response_message = json.loads(response.text)['result_message']
+                current_status = response_message['status']
+                ret_str = "Pending votes"
+                if current_status == 'done':
+                   ret_str = parse_report(response_message['report'])
+                return ret_str
+            else:
+                current_status = 'error'
+                return "Failure fetching the Report"
+            
+
+def show_report():
+    tkinter.messagebox.showinfo(title="The Report", message=get_report())
+
 def closewindow():
     
     result = tkinter.messagebox.askquestion("Exit", "Are You Sure You Want to Exit?")
@@ -63,6 +93,8 @@ def main_account_screen():
     Button(text="Add Issue", height="2", width="30", command=lambda: open_another_file('add_issue.py')).pack()
     Label(text="").pack()
     Button(text="Show Current Issue", height="2", width="30", command=showCurrIssue).pack()
+    Label(text="").pack()
+    Button(text="Show Report", height="2", width="30", command=show_report).pack()
     Label(text="").pack()
     Button(main_screen, text="Exit",height="2", width="30",  command=closewindow).pack()
     
