@@ -30,6 +30,7 @@ def open(value):
 
 def display():
     d=Toplevel()
+    d.title("Showdown")
     judgement= IntVar()
     judgement.set(0)
     for i in player_list:
