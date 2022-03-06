@@ -1,3 +1,27 @@
+## PlanningPoker-Arunachalam Team
+
+We have created a GUI client in this project implementing a subset of the functionalities available in the Command line interface. 
+
+To run the GUI client
+```commandline
+python .\mainscreen.py
+```
+# Description of Options available in GUI
+
+1. Add Issue - Adds issue into the server
+2. Show Current Issue - Displays current issue in voting fetched from server
+3. Show Report - shows the overall voting status (Please add players and votes through delta-cli application to see its working)
+4. Justify Vote - Adds a justification for the vote given to the current issue. This gets logged into the server
+5. Showdown - Provides a platform to debate over the current issue's storypoints
+6. Exit - Quit the GUI client
+
+
+# Prerequisites
+1. Run the delta-poker server using the command as described below for the starter-code
+2. Add issues to the server using the command as described below for the starter-code. (Issues can also be added from the GUI client)
+3. Use delta-cli application to create players and vote for issues to use some of the GUI functionalities. 
+
+
 ## Dr. Gary
 This project runs pretty cleanly out-of-the-box. It uses sockets not HTTP and runs on the command-line using python3.
 I ran it on multiple hosts at home and it worked with no issues. The original project is only 6 months old and is at
