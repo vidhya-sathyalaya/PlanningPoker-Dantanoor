@@ -86,6 +86,7 @@ def main_account_screen():
     Label(text="").pack()
     img=PhotoImage(file='logo2.png')
     Label(main_screen,image=img). pack()
+    Label(text="").pack()
     Button(text="Add Issue", height="2", width="30", command=lambda: open_another_file('add_issue.py')).pack()
     Label(text="").pack()
     Button(text="Show Current Issue", height="2", width="30", command=showCurrIssue).pack()
